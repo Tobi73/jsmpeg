@@ -1,0 +1,15 @@
+version: '3'
+services:
+  relay:
+    build: .
+    ports:
+     - 9000:8081
+     - 9001:8082
+    command: node websocket-relay.js supersecret 8081 8082
+  server:
+    build: .
+    depends_on:
+     - relay
+    ports:
+      - 9002:8080
+    command: http-server

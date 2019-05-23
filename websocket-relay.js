@@ -22,12 +22,12 @@ var STREAM_SECRET = process.argv[2],
 	RECORD_STREAM = false;
 
 // Websocket Server
-var socketServer = new WebSocket.Server({port: WEBSOCKET_PORT, perMessageDeflate: false});
+var socketServer = new WebSocket.Server({host: "0.0.0.0", port: WEBSOCKET_PORT, perMessageDeflate: false});
 socketServer.connectionCount = 0;
 socketServer.on('connection', function(socket, upgradeReq) {
 	socketServer.connectionCount++;
 	console.log(
-		'New WebSocket Connection: ', 
+		'New WebSocket Connection: ',
 		(upgradeReq || socket.upgradeReq).socket.remoteAddress,
 		(upgradeReq || socket.upgradeReq).headers['user-agent'],
 		'('+socketServer.connectionCount+' total)'
@@ -61,7 +61,7 @@ var streamServer = http.createServer( function(request, response) {
 
 	response.connection.setTimeout(0);
 	console.log(
-		'Stream Connected: ' + 
+		'Stream Connected: ' +
 		request.socket.remoteAddress + ':' +
 		request.socket.remotePort
 	);
